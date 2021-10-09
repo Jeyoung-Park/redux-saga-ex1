@@ -10,6 +10,7 @@ import rootReducer, { rootSaga } from "./modules";
 import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
 import { Router } from "react-router-dom";
+import { Provider } from "react-redux";
 
 const customHistory = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();
@@ -25,9 +26,9 @@ sagaMiddleware.run(rootSaga); // 루트사가 실행
 
 ReactDOM.render(
   <Router history={customHistory}>
-    <React.StrictMode>
+    <Provider store={store}>
       <App />
-    </React.StrictMode>
+    </Provider>
   </Router>,
   document.getElementById("root")
 );

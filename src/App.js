@@ -1,8 +1,12 @@
 import React from "react";
-import GeneratorView from "./GeneratorView";
+import CounterContainer from "./containers/CounterContainer";
 
 const App = () => {
-  return <GeneratorView />;
+  return (
+    <>
+      <CounterContainer />
+    </>
+  );
 };
 
 export default App;
