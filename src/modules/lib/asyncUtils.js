@@ -25,7 +25,8 @@ export const createPromiseSagaById = (type, promiseCreator) => {
   return function* saga(action) {
     const id = action.meta;
     try {
-      const payload = yield call(promiseCreator, action.payload);
+        // promiseCreator: api 호출하는 함수
+      const payload = yield call(promiseCreator, action.payload); // promiseCreator(action.payload)와 같이 실행됨
       yield put({ type: SUCCESS, payload, meta: id });
     } catch (e) {
       yield put({ type: ERROR, error: e, meta: id });

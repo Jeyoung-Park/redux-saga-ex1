@@ -1,4 +1,4 @@
-import * as postsAPI from "../api/posts"; // api/posts 안의 함수 모두 불러오기
+import * as postsAPI from '../api/posts'; // api/posts 안의 함수 모두 불러오기
 import {
   reducerUtils,
   handleAsyncActions,
@@ -10,6 +10,7 @@ import {
     call: 함수의 첫 번째 파라미터는 함수, 나머지 파라미터는 해당 함수에 넣을 인수
 */
 import { call, put, takeEvery } from "redux-saga/effects";
+import { createPromiseSaga, createPromiseSagaById } from "./lib/asyncUtils";
 
 /*  액션 타입   */
 
@@ -27,6 +28,7 @@ export const getPosts = () => ({ type: GET_POSTS });
 // payload는 파라미터 용도, meta는 리듀서에서 id를 알기 위한 용도
 export const getPost = (id) => ({ type: GET_POST, payload: id, meta: id });
 
+/*
 function* getPostsSaga() {
   try {
     // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다릴 수 있음
@@ -53,6 +55,7 @@ function* getPostSaga(action) {
   try {
     // API 함수에 넣어주고 싶은 인자는 call 함수의 두번째 인자부터 순서대로 넣어주면 됩니다.
     const post = yield call(postsAPI.getPostById, param); // postsAPI(param)
+    // put: 액션 디스패치
     yield put({
       type: GET_POST_SUCCESS,
       payload: post,
@@ -67,6 +70,10 @@ function* getPostSaga(action) {
     });
   }
 }
+*/
+
+const getPostsSaga = createPromiseSaga(GET_POSTS, postsAPI.getPosts);
+const getPostSaga = createPromiseSagaById(GET_POST, postsAPI.getPostById);
 
 // saga들을 합치기
 export function* postsSaga() {
