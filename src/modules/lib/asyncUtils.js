@@ -65,6 +65,7 @@ export const reducerUtils = {
     비동기 관련 액션을 처리하는 리듀서
     type: 액션의 타입
     key: 상태의 key(ex. posts, post)
+    keepData: 이 값이 true로 주어지면 로딩을 할 때에도 데이터를 유지하도록
 */
 export const handleAsyncActions = (type, key, keepData = false) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
