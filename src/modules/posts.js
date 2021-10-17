@@ -11,7 +11,7 @@ import {
     takeEvery: 들어오는 모든 액션에 대해 특정 작업을 처리해줌
     call: 함수의 첫 번째 파라미터는 함수, 나머지 파라미터는 해당 함수에 넣을 인수
 */
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, getContext } from "redux-saga/effects";
 
 /*  액션 타입   */
 
@@ -25,9 +25,13 @@ const GET_POST = "GET_POST";
 const GET_POST_SUCCESS = "GET_POST_SUCCESS";
 const GET_POST_ERROR = "GET_POST_ERROR";
 
+// 홈으로 가기
+const GO_TO_HOME = "GO_TO_HOME";
+
 export const getPosts = () => ({ type: GET_POSTS });
 // payload는 파라미터 용도, meta는 리듀서에서 id를 알기 위한 용도
 export const getPost = (id) => ({ type: GET_POST, payload: id, meta: id });
+export const goToHome = () => ({ type: GO_TO_HOME });
 
 /*
 function* getPostsSaga() {
@@ -75,19 +79,17 @@ function* getPostSaga(action) {
 
 const getPostsSaga = createPromiseSaga(GET_POSTS, postsAPI.getPosts);
 const getPostSaga = createPromiseSagaById(GET_POST, postsAPI.getPostById);
+function* goToHomeSaga() {
+  const history = yield getContext("history");
+  history.push("/");
+}
 
 // saga들을 합치기
 export function* postsSaga() {
   yield takeEvery(GET_POSTS, getPostsSaga); // 들어오는 GET_POSTS 요청에 따라 getPostsSaga 함수 실행
   yield takeEvery(GET_POST, getPostSaga); // 들어오는 GET_POST 요청에 따라 getPostSaga 함수 실행
+  yield takeEvery(GO_TO_HOME, goToHomeSaga);
 }
-
-// 3 번쨰 인사를 사용하면 withExtraArgument에서 넣어준 값들을 사용할 수 있음
-export const goToHome =
-  () =>
-  (dispatch, getState, { history }) => {
-    history.push("/");
-  };
 
 // initialState 쪽도 반복되는 코드를 initial() 함수를 사용해서 리팩토링
 const initialState = {
