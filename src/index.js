@@ -15,6 +15,9 @@ import { Provider } from "react-redux";
 const customHistory = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();
 
+// index.js에 axios의 글로벌 baseURL을 설정
+// axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? '/' : 'https://api.velog.io/';
+
 const store = createStore(
   rootReducer,
   // logger를 사용하는 경우, logger가 가장 마지막에 와야함
