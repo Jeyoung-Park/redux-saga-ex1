@@ -1,16 +1,17 @@
-import * as postsAPI from '../api/posts'; // api/posts 안의 함수 모두 불러오기
+import * as postsAPI from "../api/posts"; // api/posts 안의 함수 모두 불러오기
 import {
   reducerUtils,
   handleAsyncActions,
   handleAsyncActionsById,
-} from "../lib/asyncUtils";
+  createPromiseSaga,
+  createPromiseSagaById,
+} from "./lib/asyncUtils";
 /*
     put: 특정액션을 dispatch
     takeEvery: 들어오는 모든 액션에 대해 특정 작업을 처리해줌
     call: 함수의 첫 번째 파라미터는 함수, 나머지 파라미터는 해당 함수에 넣을 인수
 */
 import { call, put, takeEvery } from "redux-saga/effects";
-import { createPromiseSaga, createPromiseSagaById } from "./lib/asyncUtils";
 
 /*  액션 타입   */
 
